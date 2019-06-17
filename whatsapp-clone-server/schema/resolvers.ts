@@ -7,8 +7,8 @@ const resolvers = {
       return messages.filter(m => chat.messages.includes(m.id));
     },
     lastMessage(chat: any) {
-      const lastMessage = chat.messages[chat.messages.length - 1];
-      return messages.find(m => m.id === lastMessage);
+      const lastMessage = chat.messages[chat.messages.length - 1]; //adquiere el ID
+      return messages.find(m => m.id === lastMessage); //si es el mismo ID
     },
   },
 
