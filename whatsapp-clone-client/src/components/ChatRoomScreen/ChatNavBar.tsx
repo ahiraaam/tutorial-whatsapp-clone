@@ -6,6 +6,7 @@ import { useCallback } from 'react';
 import styled from 'styled-components';
 import { History } from 'history';
 import { ChatQueryResult } from './index';
+
 const Container = styled(Toolbar)`
   padding: 0;
   display: flex;
@@ -30,14 +31,19 @@ const Picture = styled.img`
 const Name = styled.div`
   line-height: 56px;
 `;
+
 interface ChatNavbarProps {
   history: History;
   chat: ChatQueryResult;
 }
+
 const ChatNavbar: React.FC<ChatNavbarProps> = ({ chat, history }) => {
+  
   const navBack = useCallback(() => {
-    history.replace('/chats');
+    history.replace('/');
+    history.goBack();
   }, [history]);
+
   return (
     <Container>
       <BackButton data-testid="back-button" onClick={navBack}>
