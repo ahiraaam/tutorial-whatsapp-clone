@@ -2,11 +2,9 @@ import React from 'react';
 import moment from 'moment';
 import { List, ListItem } from '@material-ui/core';
 import styled from 'styled-components';
-import { useCallback} from 'react';
+import { useCallback } from 'react';
 import { History } from 'history';
-import { useQuery } from 'react-apollo-hooks';
-import * as queries from '../../graphql/queries';
-
+import { useChatsQuery } from '../../graphql/types';
 
 const Container = styled.div`
   height: calc(100% - 56px);
@@ -60,31 +58,36 @@ const MessageDate = styled.div`
   font-size: 13px;
 `;
 
-
 interface ChatsListProps {
   history: History;
 }
+
 const ChatsList: React.FC<ChatsListProps> = ({ history }) => {
-  const {
-    data: { chats = [] },
-  } = useQuery<any>(queries.chats);
-  
   const navToChat = useCallback(
     chat => {
       history.push(`chats/${chat.id}`);
     },
     [history]
   );
+
+  const { data } = useChatsQuery();
+
+  if (data === undefined || data.chats === undefined) {
+    return null;
+  }
+
+  let chats = data.chats;
+
   return (
     <Container>
       <StyledList>
-      {chats.map((chat: any) => (
-           <StyledListItem
+        {chats.map((chat: any) => (
+          <StyledListItem
             key={chat.id}
             data-testid="chat"
             button
             onClick={navToChat.bind(null, chat)}>
-             <ChatPicture
+            <ChatPicture
               data-testid="picture"
               src={chat.picture}
               alt="Profile"

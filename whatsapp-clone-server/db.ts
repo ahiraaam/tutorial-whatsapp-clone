@@ -1,18 +1,18 @@
-export type Message ={
-  id: string,
-  content: string,
-  createdAt: Date
-}
+export type Message = {
+  id: string;
+  content: string;
+  createdAt: Date;
+};
 
-export type Chat ={
-  id: string,
-  name: string,
-  picture: string,
-  messages: string[]
-}
+export type Chat = {
+  id: string;
+  name: string;
+  picture: string;
+  messages: string[];
+};
 
-export const messages: Message[]=[]
-export const chats: Chat[] = []
+export const messages: Message[] = [];
+export const chats: Chat[] = [];
 
 export const resetDb = () => {
   messages.splice(
@@ -47,6 +47,7 @@ export const resetDb = () => {
       },
     ]
   );
+
   chats.splice(
     0,
     Infinity,
@@ -78,4 +79,5 @@ export const resetDb = () => {
     ]
   );
 };
+
 resetDb();

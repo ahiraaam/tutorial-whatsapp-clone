@@ -1,14 +1,19 @@
 import { GraphQLDateTime } from 'graphql-iso-date';
-import { chats, messages } from '../db';
-const resolvers = {
+import { Message, chats, messages } from '../db';
+import { Resolvers } from '../types/graphql';
+
+const resolvers: Resolvers = {
   Date: GraphQLDateTime,
+
   Chat: {
-    messages(chat: any) {
+    messages(chat:any) {
       return messages.filter(m => chat.messages.includes(m.id));
     },
-    lastMessage(chat: any) {
-      const lastMessage = chat.messages[chat.messages.length - 1]; //adquiere el ID
-      return messages.find(m => m.id === lastMessage); //si es el mismo ID
+
+    lastMessage(chat:any) {
+      const lastMessage = chat.messages[chat.messages.length - 1];
+
+      return messages.find(m => m.id === lastMessage) || null;
     },
   },
 
@@ -16,30 +21,47 @@ const resolvers = {
     chats() {
       return chats;
     },
-    chat(root: any, { chatId }: any) {
-      return chats.find(c => c.id === chatId);
+
+    chat(root, { chatId }) {
+      return chats.find(c => c.id === chatId) || null;
     },
   },
-
+  Subscription:{
+    messageAdded: {
+      subscribe: (root, args, { pubsub }) =>
+        pubsub.asyncIterator('messageAdded'),
+    },
+  },
+  Message: {
+    chat(message:any) {
+      return chats.find(c => c.messages.some(m => m === message.id)) || null;
+    },
+  },
   Mutation: {
-    addMessage(root: any, { chatId, content }: any) {
+    addMessage(root, { chatId, content }, { pubsub }) {
       const chatIndex = chats.findIndex(c => c.id === chatId);
+
       if (chatIndex === -1) return null;
+
       const chat = chats[chatIndex];
-      const lastMessageId = chat.messages[chat.messages.length - 1];
-      const messageId = String(Number(lastMessageId) + 1);
-      const message = {
+      const recentMessage = messages[messages.length - 1];
+      const messageId = String(Number(recentMessage.id) + 1);
+      const message: Message = {
         id: messageId,
         createdAt: new Date(),
         content,
       };
       messages.push(message);
       chat.messages.push(messageId);
-      // The chat will appear at the top of the ChatsList component
       chats.splice(chatIndex, 1);
       chats.unshift(chat);
+      pubsub.publish('messageAdded', {
+        messageAdded: message,
+      });
       return message;
     },
   },
+  
 };
+
 export default resolvers;
