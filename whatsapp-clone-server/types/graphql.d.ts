@@ -41,9 +41,23 @@ export type Message = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  signIn?: Maybe<User>;
+  signUp?: Maybe<User>;
   addMessage?: Maybe<Message>;
   addChat?: Maybe<Chat>;
   removeChat?: Maybe<Scalars['ID']>;
+};
+
+export type MutationSignInArgs = {
+  username: Scalars['String'];
+  password: Scalars['String'];
+};
+
+export type MutationSignUpArgs = {
+  name: Scalars['String'];
+  username: Scalars['String'];
+  password: Scalars['String'];
+  passwordConfirm: Scalars['String'];
 };
 
 export type MutationAddMessageArgs = {
@@ -61,6 +75,7 @@ export type MutationRemoveChatArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  me?: Maybe<User>;
   chats: Array<Chat>;
   chat?: Maybe<Chat>;
   users: Array<User>;
@@ -154,12 +169,12 @@ export type DirectiveResolverFn<
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Query: MaybePromise<{}>;
-  Chat: MaybePromise<Chat>;
+  User: MaybePromise<User>;
   ID: MaybePromise<Scalars['ID']>;
   String: MaybePromise<Scalars['String']>;
+  Chat: MaybePromise<Chat>;
   Message: MaybePromise<Message>;
   Date: MaybePromise<Scalars['Date']>;
-  User: MaybePromise<User>;
   Boolean: MaybePromise<Scalars['Boolean']>;
   Mutation: MaybePromise<{}>;
   Subscription: MaybePromise<{}>;
@@ -211,6 +226,18 @@ export type MutationResolvers<
   ContextType = MyContext,
   ParentType = ResolversTypes['Mutation']
 > = {
+  signIn?: Resolver<
+    Maybe<ResolversTypes['User']>,
+    ParentType,
+    ContextType,
+    MutationSignInArgs
+  >;
+  signUp?: Resolver<
+    Maybe<ResolversTypes['User']>,
+    ParentType,
+    ContextType,
+    MutationSignUpArgs
+  >;
   addMessage?: Resolver<
     Maybe<ResolversTypes['Message']>,
     ParentType,
@@ -235,6 +262,7 @@ export type QueryResolvers<
   ContextType = MyContext,
   ParentType = ResolversTypes['Query']
 > = {
+  me?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType>;
   chats?: Resolver<Array<ResolversTypes['Chat']>, ParentType, ContextType>;
   chat?: Resolver<
     Maybe<ResolversTypes['Chat']>,

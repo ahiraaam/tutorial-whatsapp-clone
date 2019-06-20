@@ -4,5 +4,4 @@ import { User } from './db';
 export type MyContext = {
   pubsub: PubSub;
   currentUser: User;
-
 };

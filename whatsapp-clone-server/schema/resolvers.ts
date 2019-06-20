@@ -2,6 +2,10 @@ import { withFilter } from 'apollo-server-express';
 import { GraphQLDateTime } from 'graphql-iso-date';
 import { User, Message, Chat, chats, messages, users } from '../db';
 import { Resolvers } from '../types/graphql';
+import { secret, expiration } from '../env';
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { response } from 'express';
 
 const resolvers: Resolvers = {
   Date: GraphQLDateTime,
@@ -91,6 +95,26 @@ const resolvers: Resolvers = {
   },
 
   Mutation: {
+    signIn(root, { username, password }) {
+      const user = users.find(u => u.username === username);
+
+      if (!user) {
+        throw new Error('user not found');
+      }
+
+      const passwordsMatch = bcrypt.compareSync(password, user.password);
+
+      if (!passwordsMatch) {
+        throw new Error('password is incorrect');
+      }
+
+      const authToken = jwt.sign(username, secret);
+      
+      response.cookie('authToken', authToken, { maxAge: expiration });
+
+      return user;
+    },
+
     addMessage(root, { chatId, content }, { currentUser, pubsub }) {
       if (!currentUser) return null;
 
@@ -197,25 +221,28 @@ const resolvers: Resolvers = {
         }
       ),
     },
+
     chatAdded: {
       subscribe: withFilter(
         (root, args, { pubsub }) => pubsub.asyncIterator('chatAdded'),
         ({ chatAdded }: { chatAdded: Chat }, args, { currentUser }) => {
           if (!currentUser) return false;
+
           return chatAdded.participants.some(p => p === currentUser.id);
         }
       ),
     },
+
     chatRemoved: {
       subscribe: withFilter(
         (root, args, { pubsub }) => pubsub.asyncIterator('chatRemoved'),
         ({ targetChat }: { targetChat: Chat }, args, { currentUser }) => {
           if (!currentUser) return false;
+
           return targetChat.participants.some(p => p === currentUser.id);
         }
       ),
     },
-    
   },
 };
 
