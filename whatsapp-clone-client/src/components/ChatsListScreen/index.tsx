@@ -1,6 +1,7 @@
 import React from 'react';
 import ChatsNavbar from './ChatsNavbar';
 import ChatsList from './ChatsList';
+import AddChatButton from './AddChatButton';
 import styled from 'styled-components';
 import { History } from 'history';
 
@@ -15,6 +16,7 @@ const ChatsListScreen: React.FC<ChatsListScreenProps> = ({ history }) => (
   <Container>
     <ChatsNavbar history={history}/>
     <ChatsList history={history} />
+    <AddChatButton history={history} />
   </Container>
 );
 

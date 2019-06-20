@@ -8,8 +8,6 @@ import { users } from './db';
 import cookieParser from 'cookie-parser';
 import cookie from 'cookie';
 
-
-
 const app = express();
 
 const origin = process.env.ORIGIN || 'http://localhost:3000';

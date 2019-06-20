@@ -9,6 +9,7 @@ import { History } from 'history';
 import { useGetChatQuery, useAddMessageMutation } from '../../graphql/types';
 import * as fragments from '../../graphql/fragments';
 import { writeMessage } from '../../services/cache.service';
+import { Redirect } from 'react-router-dom';
 
 const Container = styled.div`
   background: url(/assets/chat-background.jpg);
@@ -70,7 +71,7 @@ const ChatRoomScreen: React.FC<ChatRoomScreenParams> = ({
               .toString(36)
               .substr(2, 9),
             createdAt: new Date(),
-            isMine:true,
+            isMine: true,
             chat: {
               __typename: 'Chat',
               id: chatId,
@@ -94,6 +95,11 @@ const ChatRoomScreen: React.FC<ChatRoomScreenParams> = ({
 
   if (loadingChat) return null;
   if (chat === null) return null;
+
+  // Chat was probably removed from cache by the subscription handler
+  if (!chat) {
+    return <Redirect to="/chats" />;
+  }
 
   return (
     <Container>
