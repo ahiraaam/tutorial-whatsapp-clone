@@ -43,7 +43,7 @@ export const writeMessage = (client: Client, message: MessageFragment) => {
     fragmentName: 'FullChat',
     data: fullChat,
   });
-  let data;
+  let data:any;
   try {
     data = client.readQuery({
       query: queries.chats,

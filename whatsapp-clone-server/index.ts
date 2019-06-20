@@ -4,12 +4,18 @@ import cors from 'cors';
 import express from 'express';
 import schema from './schema';
 import http from 'http';
+import { users } from './db';
+import cookieParser from 'cookie-parser';
+import cookie from 'cookie';
+
 
 
 const app = express();
 
-app.use(cors());
+const origin = process.env.ORIGIN || 'http://localhost:3000';
+app.use(cors({ credentials: true, origin }));
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 app.get('/_ping', (req, res) => {
   res.send('pong');
@@ -18,12 +24,35 @@ app.get('/_ping', (req, res) => {
 const pubsub = new PubSub();
 const server = new ApolloServer({
   schema,
-  context: () => ({ pubsub }),
+  context: (session: any) => {
+    // Access the request object
+    let req = session.connection
+      ? session.connection.context.request
+      : session.req;
+    // It's subscription
+    if (session.connection) {
+      req.cookies = cookie.parse(req.headers.cookie || '');
+    }
+    return {
+      currentUser: users.find(u => u.id === req.cookies.currentUserId),
+      pubsub,
+    };
+  },
+  subscriptions: {
+    onConnect(params, ws, ctx) {
+      // pass the request object to context
+      return {
+        request: ctx.request,
+      };
+    },
+  },
 });
 
 server.applyMiddleware({
   app,
   path: '/graphql',
+  cors: { credentials: true, origin },
+
 });
 const httpServer = http.createServer(app);
 server.installSubscriptionHandlers(httpServer);
