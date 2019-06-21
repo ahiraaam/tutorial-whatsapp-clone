@@ -1,10 +1,9 @@
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloClient } from 'apollo-client';
-import { HttpLink } from 'apollo-link-http';
 import { getMainDefinition } from 'apollo-utilities';
+import { HttpLink } from 'apollo-link-http';
 import { WebSocketLink } from 'apollo-link-ws';
 import { ApolloLink, split } from 'apollo-link';
-
 
 const httpUri = process.env.REACT_APP_SERVER_URL + '/graphql';
 const wsUri = httpUri.replace(/^https?/, 'ws');
@@ -21,6 +20,7 @@ const wsLink = new WebSocketLink({
     reconnect: true,
   },
 });
+
 const terminatingLink = split(
   ({ query }) => {
     const { kind, operation } = getMainDefinition(query);
@@ -30,9 +30,11 @@ const terminatingLink = split(
   wsLink,
   httpLink
 );
+
 const link = ApolloLink.from([terminatingLink]);
 
 const inMemoryCache = new InMemoryCache();
+
 export default new ApolloClient({
   link,
   cache: inMemoryCache,

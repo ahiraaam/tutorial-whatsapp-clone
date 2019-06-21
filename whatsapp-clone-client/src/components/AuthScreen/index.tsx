@@ -1,5 +1,3 @@
-import MaterialButton from '@material-ui/core/Button';
-import MaterialTextField from '@material-ui/core/TextField';
 import React from 'react';
 import { useMemo } from 'react';
 import { Route } from 'react-router-dom';
@@ -8,6 +6,7 @@ import AnimatedSwitch from '../AnimatedSwitch';
 import SignInForm from './SignInForm';
 import SignUpForm from './SignUpForm';
 import { RouteComponentProps } from 'react-router-dom';
+
 const Container = styled.div`
   background: radial-gradient(rgb(34, 65, 67), rgb(17, 48, 50)),
     url(/assets/chat-background.jpg) no-repeat;
@@ -15,9 +14,11 @@ const Container = styled.div`
   background-blend-mode: multiply;
   color: white;
 `;
+
 const Intro = styled.div`
   height: 265px;
 `;
+
 const Icon = styled.img`
   width: 125px;
   height: auto;
@@ -26,20 +27,24 @@ const Icon = styled.img`
   padding-top: 70px;
   display: block;
 `;
+
 const Title = styled.h2`
   width: 100%;
   text-align: center;
   color: white;
 `;
+
 // eslint-disable-next-line
 const Alternative = styled.div`
   position: fixed;
   bottom: 10px;
   left: 10px;
+
   label {
     color: var(--secondary-bg);
   }
 `;
+
 const AuthScreen: React.FC<RouteComponentProps<any>> = ({
   history,
   location,
@@ -49,6 +54,7 @@ const AuthScreen: React.FC<RouteComponentProps<any>> = ({
       const handleSignUp = () => {
         history.replace('/sign-up');
       };
+
       return (
         <Alternative>
           Don't have an account yet?{' '}
@@ -59,6 +65,7 @@ const AuthScreen: React.FC<RouteComponentProps<any>> = ({
       const handleSignIn = () => {
         history.replace('/sign-in');
       };
+
       return (
         <Alternative>
           Already have an accout? <label onClick={handleSignIn}>Sign in!</label>
@@ -66,6 +73,7 @@ const AuthScreen: React.FC<RouteComponentProps<any>> = ({
       );
     }
   }, [location.pathname, history]);
+
   return (
     <Container className="AuthScreen Screen">
       <Intro className="AuthScreen-intro">
@@ -80,4 +88,5 @@ const AuthScreen: React.FC<RouteComponentProps<any>> = ({
     </Container>
   );
 };
+
 export default AuthScreen;

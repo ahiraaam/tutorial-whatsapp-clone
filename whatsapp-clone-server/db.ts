@@ -5,6 +5,7 @@ export type User = {
   password: string;
   picture: string;
 };
+
 export type Message = {
   id: string;
   content: string;
@@ -70,6 +71,7 @@ export const resetDb = () => {
       },
     ]
   );
+
   messages.splice(
     0,
     Infinity,
@@ -89,7 +91,6 @@ export const resetDb = () => {
         ),
         sender: '1',
         recipient: '3',
-
       },
       {
         id: '3',

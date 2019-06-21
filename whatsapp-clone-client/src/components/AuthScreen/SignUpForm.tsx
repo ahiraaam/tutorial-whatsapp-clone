@@ -11,6 +11,7 @@ import {
   ErrorMessage,
 } from './form-components';
 import { RouteComponentProps } from 'react-router-dom';
+
 const SignUpForm: React.FC<RouteComponentProps<any>> = ({ history }) => {
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
@@ -18,25 +19,31 @@ const SignUpForm: React.FC<RouteComponentProps<any>> = ({ history }) => {
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [error, setError] = useState('');
   const signUp = useSignUp()
+
   const updateName = useCallback(({ target }) => {
     setError('');
     setName(target.value);
   }, []);
+
   const updateUsername = useCallback(({ target }) => {
     setError('');
     setUsername(target.value);
   }, []);
+
   const updatePassword = useCallback(({ target }) => {
     setError('');
     setPassword(target.value);
   }, []);
+
   const updatePasswordConfirm = useCallback(({ target }) => {
     setError('');
     setPasswordConfirm(target.value);
   }, []);
+
   const maySignUp = useCallback(() => {
     return !!(name && username && password && password === passwordConfirm);
   }, [name, username, password, passwordConfirm]);
+
   const handleSignUp = useCallback(() => {
     signUp({ variables: { username, password, passwordConfirm, name } })
       .then(() => {
@@ -46,6 +53,7 @@ const SignUpForm: React.FC<RouteComponentProps<any>> = ({ history }) => {
         setError(error.message || error);
       });
   }, [name, username, password, passwordConfirm, history, signUp]);
+
   return (
     <SignForm>
       <ActualForm>
@@ -112,4 +120,5 @@ const SignUpForm: React.FC<RouteComponentProps<any>> = ({ history }) => {
     </SignForm>
   );
 };
+
 export default SignUpForm;
