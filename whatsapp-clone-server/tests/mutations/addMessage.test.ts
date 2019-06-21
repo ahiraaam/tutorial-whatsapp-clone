@@ -5,10 +5,10 @@ import { resetDb, pool } from '../../db';
 import sql from 'sql-template-strings';
 import { MyContext } from '../../context';
 
-describe('Mutation.removeChat', () => {
+describe('Mutation.addMessage', () => {
   beforeEach(resetDb);
 
-  it('removes chat by id', async () => {
+  it('should add message to specified chat', async () => {
     const { rows } = await pool.query(sql`SELECT * FROM users WHERE id = 1`);
     const currentUser = rows[0];
     const server = new ApolloServer({
@@ -26,18 +26,21 @@ describe('Mutation.removeChat', () => {
 
     const { query, mutate } = createTestClient(server);
 
-    const addChatRes = await mutate({
-      variables: { chatId: '1' },
+    const addMessageRes = await mutate({
+      variables: { chatId: '1', content: 'Hello World' },
       mutation: gql`
-        mutation RemoveChat($chatId: ID!) {
-          removeChat(chatId: $chatId)
+        mutation AddMessage($chatId: ID!, $content: String!) {
+          addMessage(chatId: $chatId, content: $content) {
+            id
+            content
+          }
         }
       `,
     });
 
-    expect(addChatRes.data).toBeDefined();
-    expect(addChatRes.errors).toBeUndefined();
-    expect(addChatRes.data!.removeChat).toEqual('1');
+    expect(addMessageRes.data).toBeDefined();
+    expect(addMessageRes.errors).toBeUndefined();
+    expect(addMessageRes.data).toMatchSnapshot();
 
     const getChatRes = await query({
       variables: { chatId: '1' },
@@ -45,17 +48,17 @@ describe('Mutation.removeChat', () => {
         query GetChat($chatId: ID!) {
           chat(chatId: $chatId) {
             id
-            name
-            participants {
+            lastMessage {
               id
+              content
             }
           }
         }
       `,
     });
 
-    expect(addChatRes.data).toBeDefined();
+    expect(getChatRes.data).toBeDefined();
     expect(getChatRes.errors).toBeUndefined();
-    expect(addChatRes.data!.chat).toBeUndefined();
+    expect(getChatRes.data).toMatchSnapshot();
   });
 });
