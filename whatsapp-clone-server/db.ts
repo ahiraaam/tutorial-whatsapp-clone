@@ -48,7 +48,7 @@ export const resetDb = async () => {
       name: 'Ethan Gonzalez',
       username: 'ethan',
       password: '$2a$08$xE4FuCi/ifxjL2S8CzKAmuKLwv18ktksSN.F3XYEnpmcKtpbpeZgO', // 222
-      picture: 'https://randomuser.me/api/portraits/thumb/men/1.jpg',
+      picture: '',
     },
     {
       id: '3',
@@ -109,6 +109,10 @@ export const resetDb = async () => {
     sql`SELECT setval('chats_id_seq', (SELECT max(id) FROM chats))`
   );
 
+  await pool.query(
+    sql`SELECT setval('users_id_seq', (SELECT max(id) FROM users))`
+  );
+  
   await pool.query(sql`DELETE FROM chats_users`);
   const sampleChatsUsers = [
     {
@@ -193,6 +197,7 @@ export const resetDb = async () => {
   await pool.query(
     sql`SELECT setval('messages_id_seq', (SELECT max(id) FROM messages))`
   );
+  
 };
 
 if (envResetDb) {

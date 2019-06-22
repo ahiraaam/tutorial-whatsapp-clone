@@ -8,6 +8,7 @@ import jwt from 'jsonwebtoken';
 import { validateLength, validatePassword } from '../validators';
 import sql from 'sql-template-strings';
 
+
 const resolvers: Resolvers = {
   Date: GraphQLDateTime,
 
@@ -59,7 +60,7 @@ const resolvers: Resolvers = {
       return participant ? participant.name : null;
     },
 
-    async picture(chat:any, args, { currentUser, db }) {
+    async picture(chat:any, args, { currentUser, db, dataSources }) {
       if (!currentUser) return null;
 
       const { rows } = await db.query(sql`
@@ -70,7 +71,9 @@ const resolvers: Resolvers = {
 
       const participant = rows[0];
 
-      return participant ? participant.picture : null;
+      return participant && participant.picture
+        ? participant.picture
+        : dataSources.unsplashApi.getRandomPhoto();
     },
 
     async messages(chat:any, args, { db }) {
