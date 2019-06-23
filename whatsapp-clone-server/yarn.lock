@@ -258,6 +258,25 @@
   dependencies:
     dependency-graph "0.8.0"
 
+"@graphql-modules/core@^0.7.5":
+  version "0.7.5"
+  resolved "https://registry.yarnpkg.com/@graphql-modules/core/-/core-0.7.5.tgz#a7c030afebcad388298a89b026cb2852b947d16f"
+  integrity sha512-+mcE+ysZ42WQggsrJMEDKu6tyq6uoraXX0MnQGPnZMzvjP7ko5dnqvRi6+7+Wdv+LL+wzzAWPu36YPrex5mRaQ==
+  dependencies:
+    "@graphql-modules/di" "0.7.5"
+    apollo-server-caching "0.4.0"
+    graphql-toolkit "0.2.13"
+    graphql-tools "4.0.4"
+    tslib "1.9.3"
+
+"@graphql-modules/di@0.7.5", "@graphql-modules/di@^0.7.5":
+  version "0.7.5"
+  resolved "https://registry.yarnpkg.com/@graphql-modules/di/-/di-0.7.5.tgz#d6beac0a89755813d55420c2a7058b00b46b5657"
+  integrity sha512-lId2hQZxu6rWUEhlKbBG+WJl/k/1JqWG5zgVFgfZ9YzU6gYEdkkVrZ8YWaSw0jm181owL/H9UvWMn4MpzPtWVA==
+  dependencies:
+    events "3.0.0"
+    tslib "1.9.3"
+
 "@jest/console@^24.7.1":
   version "24.7.1"
   resolved "https://registry.yarnpkg.com/@jest/console/-/console-24.7.1.tgz#32a9e42535a97aedfe037e725bd67e954b459545"
@@ -471,7 +490,7 @@
     json-ts "1.6.4"
     lodash "4.17.11"
 
-"@safe-api/middleware@^0.0.2":
+"@safe-api/middleware@0.0.2":
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/@safe-api/middleware/-/middleware-0.0.2.tgz#b6fb6411a69233bddff4439be3b9b5a95a7c7f60"
   integrity sha512-7qVClLwSXoj75tp3XBBs5XDxf6glX5sa7B+Y9KIsoln6pVot29x5LYWjr1Qyi6QCacJrbpKb04tXWBS5kiIo2g==
@@ -897,7 +916,7 @@ apollo-cache-control@0.7.2:
     apollo-server-env "2.4.0"
     graphql-extensions "0.7.2"
 
-apollo-datasource-rest@^0.5.0:
+apollo-datasource-rest@0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/apollo-datasource-rest/-/apollo-datasource-rest-0.5.0.tgz#e40cc41c04c15ab2973a7adbf8f99621bb77dd41"
   integrity sha512-zRjF9fE/h+s99HvceTn/+SRlnFQGHYw1Ic2cqSb+XR8JbYfuWARHIIIq5XhFFmqGfDgO7uXkfl3aP7Ozydbi/A==
@@ -952,7 +971,7 @@ apollo-graphql@^0.3.0:
     apollo-env "0.5.1"
     lodash.sortby "^4.7.0"
 
-apollo-link-ws@^1.0.18:
+apollo-link-ws@1.0.18:
   version "1.0.18"
   resolved "https://registry.yarnpkg.com/apollo-link-ws/-/apollo-link-ws-1.0.18.tgz#281b9b0826d5fc7e2aa14d2784c5193d8b761112"
   integrity sha512-nrWh9m7k1FQw1AK1GB1VTJS0o01cpsP2RYmTAh2j+P4lL2/72WgsblhbuF+yA1/jsgVrzg6xa+TNw3UwgGp3+g==
@@ -2072,6 +2091,11 @@ eventemitter3@^3.1.0:
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-3.1.2.tgz#2d3d48f9c346698fce83a85d7d664e98535df6e7"
   integrity sha512-tvtQIeLVHjDkJYnzf2dgVMxfuSGJeM/7UCG17TT4EumTfNtF+0nebF/4zWOIkCreAbtNqhGEboB6BWrwqNaw4Q==
 
+events@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/events/-/events-3.0.0.tgz#9a0a0dfaf62893d92b875b8f2698ca4114973e88"
+  integrity sha512-Dc381HFWJzEOhQ+d8pkNon++bk9h6cdAoAj4iE6Q4y6xgTzySWXlKn05/TVNpjnfRqi/X0EpJEJohPjNI3zpVA==
+
 exec-sh@^0.3.2:
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/exec-sh/-/exec-sh-0.3.2.tgz#6738de2eb7c8e671d0366aea0b0db8c6f7d7391b"
@@ -2520,6 +2544,25 @@ graphql-tag@2.10.1, graphql-tag@^2.9.2:
   version "2.10.1"
   resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.10.1.tgz#10aa41f1cd8fae5373eaf11f1f67260a3cad5e02"
   integrity sha512-jApXqWBzNXQ8jYa/HLkZJaVw9jgwNqZkywa2zfFn16Iv1Zb7ELNHkJaXHR7Quvd5SIGsy6Ny7SUKATgnu05uEg==
+
+graphql-toolkit@0.2.13:
+  version "0.2.13"
+  resolved "https://registry.yarnpkg.com/graphql-toolkit/-/graphql-toolkit-0.2.13.tgz#7135d7fcae38129fb08d6d6a358221aaf3ad2a6f"
+  integrity sha512-ndLkGMrRFJr2npCJS4JLjh7wE/6erD4qXiQ1L+09zMJZcKuUgxNP6NtM4zNQfNmXC9Reqth3yYohaMbduuZCWw==
+  dependencies:
+    aggregate-error "2.2.0"
+    asyncro "^3.0.0"
+    deepmerge "3.2.0"
+    glob "7.1.4"
+    graphql-import "0.7.1"
+    graphql-tag-pluck "0.8.1"
+    graphql-tools "4.0.4"
+    is-glob "4.0.1"
+    is-valid-path "0.1.1"
+    lodash "4.17.11"
+    request "2.88.0"
+    tslib "^1.9.3"
+    valid-url "1.0.9"
 
 graphql-toolkit@0.2.14:
   version "0.2.14"
@@ -4798,6 +4841,11 @@ redent@^2.0.0:
     indent-string "^3.0.0"
     strip-indent "^2.0.0"
 
+reflect-metadata@^0.1.13:
+  version "0.1.13"
+  resolved "https://registry.yarnpkg.com/reflect-metadata/-/reflect-metadata-0.1.13.tgz#67ae3ca57c972a2aa1642b10fe363fe32d49dc08"
+  integrity sha512-Ts1Y/anZELhSsjMcU605fU9RE4Oi3p5ORujwbIKXfWa+0Zxs510Qrmrce5/Jowq3cHSZSJqBjypxmHarc+vEWg==
+
 regenerator-runtime@^0.13.2:
   version "0.13.2"
   resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.2.tgz#32e59c9a6fb9b1a4aff09b4930ca2d4477343447"
@@ -5611,6 +5659,11 @@ tslib@1.10.0, tslib@^1.9.0, tslib@^1.9.3:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.10.0.tgz#c3c19f95973fb0a62973fb09d90d961ee43e5c8a"
   integrity sha512-qOebF53frne81cf0S9B41ByenJ3/IuH8yJKngAX35CmiZySA0khhkovshKK+jGCaMnVomla7gVlIcc3EvKPbTQ==
+
+tslib@1.9.3:
+  version "1.9.3"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"
+  integrity sha512-4krF8scpejhaOgqzBEcGM7yDIEfi0/8+8zDRZhNZZ2kjmHJ4hv3zCbQWxoJGz1iw5U0Jl0nma13xzHXcncMavQ==
 
 tunnel-agent@^0.6.0:
   version "0.6.0"
